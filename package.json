@@ -1,0 +1,15 @@
+{
+  "name": "play_with_pi",
+  "version": "1.0.0",
+  "description": "play with raspberry pi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "mxxxxxs",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^6.1.4"
+  }
+}
