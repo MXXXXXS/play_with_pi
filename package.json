@@ -4,12 +4,17 @@
   "description": "play with raspberry pi",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./pi/server.js"
   },
   "keywords": [],
   "author": "mxxxxxs",
   "license": "MIT",
   "dependencies": {
+    "formidable": "^1.2.1",
     "ws": "^6.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MXXXXXS/play_with_pi.git"
   }
 }
