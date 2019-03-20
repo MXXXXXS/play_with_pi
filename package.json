@@ -4,12 +4,14 @@
   "description": "play with raspberry pi",
   "main": "index.js",
   "scripts": {
-    "start": "node ./pi/server.js"
+    "start": "node ./pi/server.js",
+    "wrap": "node ./controler/file_wrapper.js"
   },
   "keywords": [],
   "author": "mxxxxxs",
   "license": "MIT",
   "dependencies": {
+    "combined-stream": "^1.0.7",
     "formidable": "^1.2.1",
     "onoff": "^4.1.0",
     "ws": "^6.1.4"

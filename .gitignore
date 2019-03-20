@@ -1,1 +1,4 @@
 node_modules/
+lab/
+test_assets/
+.vscode/
