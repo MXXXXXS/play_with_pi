@@ -14,36 +14,32 @@ class ConcatStream {
     let end = this.streams.length - 1
     let stop = false
 
-    async function pipe(dest, index) {
+    function pipe(dest) {
       if (!stop && index <= end) {
-        let pipeline = new Promise((res, rej) => {
-          let writeable
-          if (index === end) {
-            writeable = streams[index].pipe(dest, {
-              end: true
-            })
-          } else {
-            writeable = streams[index].pipe(dest, {
-              end: false
-            })
-          }
-
-          streams[index].on('error', err => {
-            rej(err)
+        console.log('ConcatStream start stream' + index)
+        if (index === end) {
+          streams[index].pipe(dest, {
+            end: true
           })
-
-          streams[index].on('end', () => {
-            res(writeable)
+        } else {
+          streams[index].pipe(dest, {
+            end: false
           })
-        }).catch((err) => {
+        }
+
+        streams[index].on('error', err => {
           stop = true
-          console.error('Error on stream' + index + '\n' + err)
+          console.error(`ConcatStream stream ${index} error`, err)
         })
 
-        pipe(await pipeline, ++index)
+        streams[index].on('end', () => {
+          console.log(`ConcatStream stream ${index} end`)
+          index++
+          pipe(dest)
+        })
       }
     }
-    pipe(dest, index)
+    pipe(dest)
   }
 }
 

@@ -1,5 +1,8 @@
 const net = require('net')
 const fs = require('fs')
+
+const FileParser = require('./utils/fileParser')
+
 const port = 2333
 let fileStream = fs.createWriteStream('test.jpg', {
   flags: 'a',
