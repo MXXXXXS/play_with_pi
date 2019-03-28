@@ -1,16 +1,15 @@
 const net = require('net')
 const fs = require('fs')
+const path = require('path')
 
 const FileParser = require('./utils/fileParser')
 
+const saveDir = path.resolve(__dirname, './test/test_assets/dest')
+const fileParser = new FileParser(saveDir)
 const port = 2333
-let fileStream = fs.createWriteStream('test.jpg', {
-  flags: 'a',
-  encoding: 'ascii'
-})
+
 const server = net.createServer(socket => {
   socket.on('end', () => {
-    fileStream.end()
     console.log('end')
   })
 
@@ -22,13 +21,7 @@ const server = net.createServer(socket => {
     }
   })
 
-  socket.on('data', buf => {
-    fileStream.write(buf, 'ascii')
-    // console.log(buf.toString('utf8'))
-  })
-
-  socket.write('welcome, controler here')
-  socket.pipe(socket)
+  socket.pipe(fileParser)
 })
 
 
@@ -37,5 +30,5 @@ server.on('error', err => {
 })
 
 server.listen(port, () => {
-  console.log('listening on:' + port)
+  console.log('syncFiles listening on:' + port)
 })

@@ -23,10 +23,9 @@ const infoMark = /<\w{8}>/g
 const infoMarkString = new Randexp(infoMark).gen()
 const fileMarkString = '</' + infoMarkString.slice(1, infoMarkString.length)
 
-console.log(`infoMarkString: ${infoMarkString}`)
-console.log(`fileMarkString: ${fileMarkString}`)
+console.log(`infoMarkString: ${infoMarkString}`, `fileMarkString: ${fileMarkString}`)
 
-function wrapFile(...files) {
+module.exports = function (files) {
   let fileWrapped = new ConcatStream()
   files.forEach(file => {
     let info = new BufSteam(Buffer.from(`${infoMarkString}${JSON.stringify({
@@ -34,15 +33,9 @@ function wrapFile(...files) {
         size: fs.statSync(file).size
       })}${fileMarkString}`))
     let data = fs.createReadStream(file, {
-      encoding: 'ascii'
+      encoding: 'binary'
     })
     fileWrapped.push(info).push(data)
   })
   return fileWrapped
-}
-
-module.exports = {
-  wrapFile,
-  infoMarkString,
-  fileMarkString
 }

@@ -1,38 +1,36 @@
 const net = require('net')
 const path = require('path')
 const fs = require('fs')
-
 const readline = require('readline')
 
 const wrapFile = require('./utils/fileWrapper')
 
 const port = 2333
 const host = '127.0.0.1'
-const infoMark = /<[a-z]{5}>/g
-const fileMark = /<\/[a-z]{5}>/g
-const watchedDir = ''
+const watchedDir = 'D:/coding/play_with_pi/human/test/test_assets/source'
 
-let fsNeedToSync = new Set()
-let testFiles = ['D:/UW/图片/sicp/1466138026831.jpg', 'D:/UW/图片/sicp/1371370052708.jpg', 'D:/UW/图片/sicp/is6.jpg']
-
-
+let socket
 
 function watch(watchedDir) {
-  fs.watch(watchedDir, (etype, filename) => {
-    if (etype = 'change') {
-      console.log(filename);
-      fsNeedToSync.add(filename);
+  console.log('Watching: ', watchedDir)
+  fs.watch(watchedDir, {
+    recursive: false
+  }, (etype, filename) => {
+    if (etype == 'change') {
+      console.log('file changed: ' + filename)
+      const fileStream = wrapFile([path.resolve(watchedDir, filename)])
+      fileStream.to(socket)
     }
   })
 }
 
 function link() {
-  const socket = net.connect(port, host, () => {
+  socket = net.connect(port, host, () => {
     console.log('connected')
   })
 
   socket.on('data', buf => {
-    console.log(buf.toString('utf8'))
+    console.log(buf.toString('utf8').slice(0, 10))
   })
 
   socket.on('error', err => {
@@ -69,12 +67,12 @@ function interact() {
 
   rl.on('line', line => {
     switch (line.trim()) {
-      case 'send file':
-        sendFile()
-        break
-      case 'reboot':
-        reboot()
+      case 'sync':
+        link()
+        watch(watchedDir)
         break
     }
   })
 }
+
+interact()
