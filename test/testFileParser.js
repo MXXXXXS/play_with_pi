@@ -2,8 +2,8 @@ const path = require('path')
 
 const BufSteam = require('../utils/BufStream')
 const FileParser = require('../utils/fileParser')
-const collectFiles = require('./utils/collectFiles')
-const wrapFile = require('./utils/fileWrapper')
+const collectFiles = require('../utils/collectFiles')
+const wrapFile = require('../utils/fileWrapper')
 
 const saveDir = path.resolve(__dirname, './test_assets/dest')
 const filesDir = path.resolve(__dirname, './test_assets/source')
