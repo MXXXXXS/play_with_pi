@@ -4,13 +4,14 @@
   "description": "play with raspberry pi",
   "main": "index.js",
   "scripts": {
-    "start": "node ./pi/server.js",
-    "wrap": "node ./controler/file_wrapper.js"
+    "toSync": "node human/toSyncFiles.js",
+    "sync": "node pi/syncFiles.js"
   },
   "keywords": [],
   "author": "mxxxxxs",
   "license": "MIT",
   "dependencies": {
+    "chokidar": "^2.1.5",
     "combined-stream": "^1.0.7",
     "formidable": "^1.2.1",
     "onoff": "^4.1.0",

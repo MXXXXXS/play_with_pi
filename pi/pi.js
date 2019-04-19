@@ -1,5 +1,5 @@
-const Gpio = require('onoff').Gpio
-const led = new Gpio(21, 'out')
+const Gpio = require(`onoff`).Gpio
+const led = new Gpio(21, `out`)
 
 const iv = setInterval(() => led.writeSync(led.readSync() ^ 1), 200)
 

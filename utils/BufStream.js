@@ -1,9 +1,9 @@
 const {
   Readable
-} = require('stream')
+} = require(`stream`)
 
 class BufStream extends Readable {
-  constructor(buffer, opts) {
+  constructor (buffer, opts) {
     super(opts)
     if (opts) {
       this.chunkSize = opts.highWaterMark / 4
@@ -17,7 +17,7 @@ class BufStream extends Readable {
     this.notDrained = true
   }
 
-  _read() {
+  _read () {
     let chunk
     const push = (chunk, isEnd = false) => {
       if (this.notDrained) {

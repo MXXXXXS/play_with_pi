@@ -1,22 +1,22 @@
 class ConcatStream {
-  constructor() {
+  constructor () {
     this.streams = []
   }
 
-  push(readable) {
+  push (readable) {
     this.streams.push(readable)
     return this
   }
 
-  to(dest) {
+  to (dest) {
     let streams = this.streams
     let index = 0
     let end = this.streams.length - 1
     let stop = false
 
-    function pipe(dest) {
+    function pipe (dest) {
       if (!stop && index <= end) {
-        console.log('ConcatStream start stream' + index)
+        console.log(`ConcatStream start stream` + index)
         if (index === end) {
           streams[index].pipe(dest, {
             end: true
@@ -27,12 +27,12 @@ class ConcatStream {
           })
         }
 
-        streams[index].on('error', err => {
+        streams[index].on(`error`, err => {
           stop = true
           console.error(`ConcatStream stream ${index} error`, err)
         })
 
-        streams[index].on('end', () => {
+        streams[index].on(`end`, () => {
           console.log(`ConcatStream stream ${index} end`)
           index++
           pipe(dest)

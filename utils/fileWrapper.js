@@ -11,17 +11,17 @@
 //   "hash_algorithm": String
 // }
 //file: file data
-const fs = require('fs')
-const path = require('path')
+const fs = require(`fs`)
+const path = require(`path`)
 
-const Randexp = require('randexp')
+const Randexp = require(`randexp`)
 
-const BufSteam = require('./BufStream')
-const ConcatStream = require('./ConcatStream')
+const BufSteam = require(`./BufStream`)
+const ConcatStream = require(`./ConcatStream`)
 
 const infoMark = /<\w{8}>/g
 const infoMarkString = new Randexp(infoMark).gen()
-const fileMarkString = '</' + infoMarkString.slice(1, infoMarkString.length)
+const fileMarkString = `</` + infoMarkString.slice(1, infoMarkString.length)
 
 console.log(`infoMarkString: ${infoMarkString}`, `fileMarkString: ${fileMarkString}`)
 
@@ -29,11 +29,11 @@ module.exports = function (files) {
   let fileWrapped = new ConcatStream()
   files.forEach(file => {
     let info = new BufSteam(Buffer.from(`${infoMarkString}${JSON.stringify({
-        name: path.basename(file),
-        size: fs.statSync(file).size
-      })}${fileMarkString}`))
+      name: path.basename(file),
+      size: fs.statSync(file).size
+    })}${fileMarkString}`))
     let data = fs.createReadStream(file, {
-      encoding: 'binary'
+      encoding: `binary`
     })
     fileWrapped.push(info).push(data)
   })

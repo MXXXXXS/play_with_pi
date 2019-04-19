@@ -1,11 +1,11 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require(`fs`)
+const path = require(`path`)
 
 let collectFiles = (dir, deep = true) => {
   let filesCollection = []
   recursion(dir, deep)
 
-  function recursion(dir, deep) {
+  function recursion (dir, deep) {
     let files = fs.readdirSync(dir)
     files.forEach(item => {
       let isDir = fs.statSync(path.resolve(dir, item)).isDirectory()
